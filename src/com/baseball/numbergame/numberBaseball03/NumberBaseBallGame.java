@@ -1,4 +1,4 @@
-package src.com.baseball.numbergame.numberBaseball01;
+package src.com.baseball.numbergame.numberBaseball03;
 
 import java.util.*;
 
