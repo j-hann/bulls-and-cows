@@ -1,4 +1,4 @@
-package src.com.baseball.numbergame.numberBaseball01;
+package src.com.baseball.numbergame.numberBaseball;
 
 import java.util.*;
 
@@ -35,8 +35,8 @@ public class NumberBaseBallGame {
                 answerNumbersList = new ArrayList<Integer>(answerNumbers);
             }//while
             //출력 확인을 위한 코드 (삭제 예정)
-            System.out.println("\n 정답 숫자 hashSet" + answerNumbers);
-            System.out.println("정답 숫자 ArrayList" + answerNumbersList);
+            System.out.println("\n정답 숫자 hashSet" + answerNumbers);
+//            System.out.println("정답 숫자 ArrayList" + answerNumbersList);
 
             System.out.println();
             System.out.println("환영합니다!✨ 원하시는 번호를 입력해주세요.\n" +
@@ -60,7 +60,7 @@ public class NumberBaseBallGame {
 
                             //숫자 입력값 유효성 검사
                             if (userInputNumber.length() == 3) {//입력 값의 길이가 3자리
-                                if (userInputNumber.matches(".[1-9].")) {//1부터 9까지 숫자 포함여부
+                                if (userInputNumber.matches("([1-9])([1-9])([1-9])")) {//1부터 9까지 숫자 포함여부
 
                                     //문자 분리 후, Int 타입으로 변환
                                     for (String numberText : userInputNumber.split("")) {//문자열 분할
@@ -86,36 +86,38 @@ public class NumberBaseBallGame {
                                                 strike++;
                                             } else if (userSelectNumberList.contains(answerNumbersList.get(indexAnswer))) {
                                                 ball++;
-                                            } else if(strike == 0 && ball ==0){
+                                            } else if (strike == 0 && ball == 0) {
                                                 out = "아웃입니다.";
                                             }//if-else
                                         }//
 
                                         System.out.println("-------------------🔎 Hint---------------------");
-                                        if(out.isEmpty()){
+                                        if (out.isEmpty()) {
                                             System.out.println("strike : " + strike + " & " + "ball : " + ball);
                                             userSelectNumberList.clear();//사용자 입력 숫자 초기화
-                                        }else {
+                                        } else {
                                             System.out.println(out);
                                             userSelectNumberList.clear();//사용자 입력 숫자 초기화
                                         }//if-else
 
                                         //정답일 경우, 게임 종료 & 초기화------------
-                                        if(strike == 3){
+                                        if (strike == 3) {
                                             answerNumbers.clear();//정답 숫자 초기화
                                             System.out.println("3 스트라이크!✨ 축하합니다!🎉 정답입니다.");
                                             System.out.println("총 시도 횟수는 : " + gameTryCount + "번 입니다.");
                                             gamePlayCount++;//게임 실행 횟수 카운트
-                                            gameHistory.put(gamePlayCount,gameTryCount);
+                                            gameHistory.put(gamePlayCount, gameTryCount);
                                             break;
                                         }//if
 
                                     } else {//중복된 숫자 입력되었을 시
                                         System.out.println("중복된 숫자가 입력되었습니다. 다시 입력해주세요.");
+                                        //출력 확인을 위한 코드(삭제 예정)
+                                        System.out.println("userSelectNumberList 확인해보기 : " + userSelectNumberList);
                                         userSelectNumberList.clear();//userSelectNumberList 초기화
                                     }//if-else
 
-                                } else if(userInputNumber.contains("0")){//특정 문자열 포함
+                                } else {//0이 입력되면
                                     System.out.println("범위 이상의 숫자가 입력되었습니다. 다시 입력해주세요.");
                                 }//if-else
 
@@ -124,7 +126,7 @@ public class NumberBaseBallGame {
                             }//if-else-inner
                         } else {//문자 입력시
                             System.out.println("문자가 입력되었습니다. 다시 입력해주세요.");
-                            scanner.nextLine();//문자만 여러번 입력시 엔터 눌러야 됨 -> 오류남
+                            scanner.nextLine();//문자만 여러번 입력시 엔터 눌러야 됨 -> 1회 실행 이후 오류남
                         }//if-else
                         scanner.nextLine();//개행문자 제거 : 없을시 while문 무한반복 됨
                     }//while-inner
@@ -135,12 +137,12 @@ public class NumberBaseBallGame {
                     System.out.println("📃 숫자야구 게임 기록을 확인합니다.");
 
                     //기록이 없을 경우
-                    if(gameHistory.isEmpty()){
+                    if (gameHistory.isEmpty()) {
                         System.out.println("🚨 기록된 게임 데이터가 없습니다.");
                     }//if
 
                     //게임 기록 출력
-                    gameHistory.forEach((key, value) ->{
+                    gameHistory.forEach((key, value) -> {
                         System.out.println(key + "번째 게임 : " + " 시도 횟수 : " + value);
                     });//forEach
 
